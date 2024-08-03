@@ -3,6 +3,7 @@ package banking;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 import javax.swing.*;
 
@@ -24,7 +25,7 @@ public class Login extends JFrame implements ActionListener {
         JLabel label = new JLabel(i3);
         label.setBounds(70, 10, 100, 100);
         add(label);
-      
+
         JLabel text = new JLabel("Welcome to ATM");
         text.setFont(new Font("Oswald", Font.BOLD, 38));
         text.setBounds(200, 40, 400, 40);
@@ -81,13 +82,36 @@ public class Login extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == clear) {
+
             cardTextField.setText("");
             pinTextField.setText("");
+
         } else if (ae.getSource() == login) {
 
+            Conn conn = new Conn();
+            String cardNumber = cardTextField.getText();
+            String pinNumber = pinTextField.getText();
+
+            String query = "select * from login where cardnumber = '"+cardNumber+"' and pin = '"+pinNumber+"'";
+            try {
+                ResultSet rs = conn.s.executeQuery(query);
+                
+                if (rs.next()) {
+                    setVisible(false);
+                    new Transactions(pinNumber).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect Card Number or PIN");
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
         } else if (ae.getSource() == signup) {
+
             setVisible(false);
             new SignupOne().setVisible(true);
+
         }
     }
 
