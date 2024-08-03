@@ -191,6 +191,10 @@ public class SignupTwo extends JFrame implements ActionListener {
                         + "', '" + education + "', '" + occupation + "', '" + pan + "', '" + aadhar + "', '" + seniorCitizen
                         + "', '" + existingAccount + "')";
                 c.s.executeUpdate(query);
+
+                //signupThree Object
+                setVisible(false);
+                new SignupThree(formno).setVisible(true);;
             }
         } catch (Exception e) {
             System.out.println(e);
