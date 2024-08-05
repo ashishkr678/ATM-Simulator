@@ -4,5 +4,8 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
     ],
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "editor.minimap.enabled": true,
+    "editor.minimap.showRegionSectionHeaders": false,
+    "editor.minimap.autohide": true
 }

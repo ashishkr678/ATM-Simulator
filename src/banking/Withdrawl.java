@@ -75,7 +75,6 @@ public class Withdrawl extends JFrame implements ActionListener {
             setVisible(false);
             new Transactions(pinNumber).setVisible(true);
         }
-
     }
 
     public static void main(String[] args) {
