@@ -64,6 +64,7 @@ public class Transactions extends JFrame implements ActionListener {
 
         setSize(800,800);
         setLocation(300,0);
+        getContentPane().setBackground(Color.WHITE);
         setUndecorated(true);
         setVisible(true);
     }
@@ -86,6 +87,8 @@ public class Transactions extends JFrame implements ActionListener {
         } else if (ae.getSource() == balanceEnquiry) {
             setVisible(false);
             new BalanceEnquiry(pinNumber).setVisible(true);
+        } else if (ae.getSource() == miniStatement) {
+            new MiniStatement(pinNumber).setVisible(true);
         }
     }
 
