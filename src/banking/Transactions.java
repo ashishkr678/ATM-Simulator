@@ -64,7 +64,7 @@ public class Transactions extends JFrame implements ActionListener {
 
         setSize(800,800);
         setLocation(300,0);
-        // setUndecorated(true);
+        setUndecorated(true);
         setVisible(true);
     }
     public void actionPerformed(ActionEvent ae) {
@@ -83,6 +83,9 @@ public class Transactions extends JFrame implements ActionListener {
         } else if (ae.getSource() == pinChange) {
             setVisible(false);
             new PinChange(pinNumber).setVisible(true);
+        } else if (ae.getSource() == balanceEnquiry) {
+            setVisible(false);
+            new BalanceEnquiry(pinNumber).setVisible(true);
         }
     }
 

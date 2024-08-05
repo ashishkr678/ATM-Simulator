@@ -61,7 +61,7 @@ public class PinChange extends JFrame implements ActionListener {
 
         setSize(800, 800);
         setLocation(300, 0);
-        // setUndecorated(true);
+        setUndecorated(true);
     }
 
     public void actionPerformed(ActionEvent ae) {
