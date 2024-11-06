@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-
 import javax.swing.*;
 
 public class Login extends JFrame implements ActionListener {
@@ -12,11 +11,12 @@ public class Login extends JFrame implements ActionListener {
     JButton login, signup, clear;
     JTextField cardTextField;
     JPasswordField pinTextField;
-  
+    
+    int attempts = 0;
+    boolean isBlocked = false;
+
     Login() {
-    	
         setTitle("AUTOMATED TELLER MACHINE");
-        
         setLayout(null);
         
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/logo.jpg"));
@@ -37,7 +37,7 @@ public class Login extends JFrame implements ActionListener {
         add(cardno);
 
         cardTextField = new JTextField();
-        cardTextField.setBounds(300,150,230,30);
+        cardTextField.setBounds(300, 150, 230, 30);
         cardTextField.setFont(new Font("Arial", Font.BOLD, 16));
         add(cardTextField);
 
@@ -47,8 +47,8 @@ public class Login extends JFrame implements ActionListener {
         add(pin);
 
         pinTextField = new JPasswordField();
-        pinTextField.setBounds(300,220,230,30);
-        pinTextField.setFont(new Font("Arial", Font.BOLD,16));
+        pinTextField.setBounds(300, 220, 230, 30);
+        pinTextField.setFont(new Font("Arial", Font.BOLD, 16));
         add(pinTextField);
 
         login = new JButton("Sign In");
@@ -74,48 +74,56 @@ public class Login extends JFrame implements ActionListener {
         
         getContentPane().setBackground(Color.WHITE);
         
-        setSize(800,480);
+        setSize(800, 480);
         setVisible(true);
-        setLocation(350,200);
-        
+        setLocation(350, 200);
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == clear) {
-
             cardTextField.setText("");
             pinTextField.setText("");
-
         } else if (ae.getSource() == login) {
+            if (isBlocked) {
+                JOptionPane.showMessageDialog(null, "Card is blocked. Please contact your bank branch.");
+                return;
+            }
 
             Conn conn = new Conn();
             String cardNumber = cardTextField.getText();
             String pinNumber = pinTextField.getText();
 
-            String query = "select * from login where cardnumber = '"+cardNumber+"' and pin = '"+pinNumber+"'";
+            String query = "SELECT * FROM login WHERE cardnumber = '" + cardNumber + "' AND pin = '" + pinNumber + "'";
             try {
                 ResultSet rs = conn.s.executeQuery(query);
-                
+
                 if (rs.next()) {
+                    attempts = 0;
                     setVisible(false);
                     new Transactions(pinNumber).setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Incorrect Card Number or PIN");
-                }
+                    attempts++;
+                    JOptionPane.showMessageDialog(null, "Incorrect Card Number or PIN. Attempt " + attempts + " of 3.");
 
+                    if (attempts >= 3) {
+                        isBlocked = true;
+                        JOptionPane.showMessageDialog(null, "Card is blocked. Please contact your bank branch.");
+                        
+                        String updateQuery = "UPDATE login SET status = 'blocked' WHERE cardnumber = '" + cardNumber + "'";
+                        conn.s.executeUpdate(updateQuery);
+                    }
+                }
             } catch (Exception e) {
                 System.out.println(e);
             }
 
         } else if (ae.getSource() == signup) {
-
             setVisible(false);
             new SignupOne().setVisible(true);
-
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new Login();
     }
 }
