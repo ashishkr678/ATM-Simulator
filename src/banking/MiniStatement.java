@@ -15,7 +15,7 @@ public class MiniStatement extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Mini Statement");
 
-        JLabel bank = new JLabel("SBI Bank");
+        JLabel bank = new JLabel("GITA Bank");
         bank.setBounds(150, 20, 100, 20);
         add(bank);
 
@@ -60,7 +60,7 @@ public class MiniStatement extends JFrame implements ActionListener {
 
 
         setSize(400, 600);
-        setLocation(20, 20);
+        setLocation(30, 30);
         getContentPane().setBackground(Color.WHITE);
     }
 

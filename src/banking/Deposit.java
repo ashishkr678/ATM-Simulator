@@ -17,35 +17,35 @@ public class Deposit extends JFrame implements ActionListener {
         setLayout(null);
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(800, 800, Image.SCALE_DEFAULT);
+        Image i2 = i1.getImage().getScaledInstance(750, 750, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);
-        image.setBounds(0, 0, 800, 800);
+        image.setBounds(0, 0, 750, 750);
         add(image);
 
-        JLabel text = new JLabel("Enter the amount you want to deposit");
-        text.setBounds(155, 280, 290, 30);
+        JLabel text = new JLabel("Enter The Amount You Want To Deposit");
+        text.setBounds(220, 180, 400, 30);
         text.setForeground(Color.WHITE);
-        text.setFont(new Font("Raleway", Font.BOLD, 16));
+        text.setFont(new Font("System", Font.BOLD, 16));
         image.add(text);
 
         amount = new JTextField();
         amount.setFont(new Font("Raleway", Font.BOLD, 22));
-        amount.setBounds(155, 330, 290, 25);
+        amount.setBounds(200, 240, 350, 30);
         image.add(amount);
 
         deposit = new JButton("Deposit");
-        deposit.setBounds(335, 430, 120, 25);
+        deposit.setBounds(440, 340, 150, 30);
         deposit.addActionListener(this);
         image.add(deposit);
 
         back = new JButton("Back");
-        back.setBounds(335, 460, 120, 25);
+        back.setBounds(440, 380, 150, 30);
         back.addActionListener(this);
         image.add(back);
 
-        setSize(800, 800);
-        setLocation(300, 0);
+        setSize(750, 750);
+        setLocation(400, 20);
         getContentPane().setBackground(Color.WHITE);
         setUndecorated(true);
         setVisible(true);
@@ -65,7 +65,7 @@ public class Deposit extends JFrame implements ActionListener {
                     String query = "insert into bank values('" + pinNumber + "', '" + date + "', 'Deposit', '" + number
                             + "')";
                     con.s.executeUpdate(query);
-                    JOptionPane.showMessageDialog(null, "RS "+number+" Deposited Successfully");
+                    JOptionPane.showMessageDialog(null, "RS " + number + " Deposited Successfully");
                     setVisible(false);
                     new Transactions(pinNumber).setVisible(true);
                 } catch (Exception e) {
